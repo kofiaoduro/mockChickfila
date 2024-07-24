@@ -10,10 +10,10 @@ app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname + '/views' ));
 
+app.use('/CssFiles', express.static('public/css/app.css'))
 
 app.get('/', (req, res)=>{
     res.render('home')
-    console.log('home request')
 })
 
 

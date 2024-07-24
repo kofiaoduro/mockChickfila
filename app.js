@@ -6,12 +6,14 @@ const path = require('path')
 
 
 // Set EJS as the view engine
+app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname + '/views' ));
 
 
 app.get('/', (req, res)=>{
-    res.send('hi')
+    res.render('home')
+    console.log('home request')
 })
 
 

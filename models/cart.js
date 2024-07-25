@@ -17,7 +17,7 @@ async function main() {
 }
 
 cartSchema = new Schema({
-    prducts: [{type: Schema.Types.ObjectId, ref: 'Product'}]
+    products: [{type: Schema.Types.ObjectId, ref: 'Product'}]
 })
 
 

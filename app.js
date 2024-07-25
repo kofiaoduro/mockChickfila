@@ -16,6 +16,8 @@ app.use('/cssFiles', express.static('public/css/app.css'))
 app.use('/imageFiles', express.static('public/images'))
 
 
+app.use(express.urlencoded({extended: true}))
+
 app.use(session({
     secret: 'My Secret',
     resave: false,
@@ -23,6 +25,7 @@ app.use(session({
 }))
 
 app.use(flash())
+
 
 app.get('/', async (req, res)=>{
     const categoryLinks = await Category.find({})

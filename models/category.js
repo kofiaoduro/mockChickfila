@@ -21,6 +21,12 @@ const categorySchema = new Schema({
         type: String,
         enum: ['Breakfast', 'Entrees', 'Salads', 'Sides', 'Kids Meals', 'Treats', 'Beverages', '']
     },
+    description:{
+        type: String
+    },
+    image: {
+        type:String
+    }
 })
 
 const Category = mongoose.model('Category', categorySchema)

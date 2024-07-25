@@ -1,4 +1,18 @@
 <% layout('boilerplate/boiler') -%>
 <main>
-    <p>Welcome</p>
+        <div class="hero">
+            <p>Chick-fil-A Menu</p>
+            <p>Availability may differ at different locations.</p>
+        </div>
+        <div class="main-section">
+            <% for(link of categoryLinks){ %>
+                <div class="category-container">
+                    <img src="/imageFiles/<%= link.image%>">
+                    <div class="category-content">
+                        <a href="/menu/<%= link.name %>"><%= link.name %></a>
+                        <p><%= link.description %></p>
+                    </div>
+                </div>
+            <% } %>
+        </div>
 </main>

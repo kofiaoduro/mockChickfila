@@ -11,9 +11,11 @@
 <body>
     <%- include('../partials/header') %>
     <div class="wrapper">
-        <%- include('../partials/phoneBar') %>
+        <%- include('../partials/phoneBar', {categoryLinks: categoryLinks }) %>
         <%-body -%>
     </div>
     <%- include('../partials/footer.ejs') %>
+
+    <script src="/javascript"></script>
 </body>
 </html>

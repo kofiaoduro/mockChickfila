@@ -14,7 +14,7 @@ app.set('views', path.join(__dirname + '/views' ));
 
 app.use('/cssFiles', express.static('public/css/app.css'))
 app.use('/imageFiles', express.static('public/images'))
-
+app.use('/javascript', express.static('public/javascript/index.js'))
 
 app.use(express.urlencoded({extended: true}))
 

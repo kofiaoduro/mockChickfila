@@ -5,11 +5,18 @@ const Category = require('../models/category')
 
 
 router.get('/menu/:name', async (req, res)=>{
-    const { name} = req.params
-    const categoryLink = await Category.find({name})
-    res.render('menu',{ categoryLink })
-    console.log(categoryLink)
-
+    try{
+        console.log('Got a get request')
+        const { name} = req.params
+        const categoryLink = await Category.findOne({name})
+        .populate('products')
+        res.render('menu',{ categoryLink })
+        console.log(categoryLink)
+    }
+    catch(e){
+        console.log(e)
+    }
+   
 })
 
 

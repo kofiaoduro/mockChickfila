@@ -15,6 +15,7 @@ app.use('/imageFiles', express.static('public/images'))
 
 app.get('/', async (req, res)=>{
     const categoryLinks = await Category.find({})
+    .populate('products')
     console.log(categoryLinks)
     res.render('home', { categoryLinks })
 })

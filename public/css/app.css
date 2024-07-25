@@ -117,6 +117,45 @@ main{
     object-fit: cover;
     border-radius: 30px;
 }
+.card{
+    margin: 2rem auto;
+}
+.card-content{
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+.card-content a{
+    text-decoration: none;
+}
+.card-info{
+    font-size: 20px;
+    text-align: left;
+    line-height: 25px;
+}
+.card-info p{
+    font-size: 12px;
+    color: #8b7c7c;
+}
+.card-info a{
+    color: #857d7d;
+}
+.card-btn{
+    width: 110px;
+    height: 40px;
+    background-color: #E51636;
+    border: 1px solid;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    border: none;
+}
+.card-btn a{
+    color: #fff;
+}
 footer{
     margin-top: auto;
     background-color: #ddd;

@@ -3,6 +3,13 @@ const router = express.Router()
 const Category = require('../models/category')
 const Product = require('../models/product')
 const Cart = require('../models/cart')
+const { fetchCategoryLinks } = require('../middleware')
+const { addShoppingCartToLocals } = require('../middleware')
+const { loopThroughCartSession } = require('../middleware')
+
+router.use(fetchCategoryLinks);
+router.use(addShoppingCartToLocals);
+router.use(loopThroughCartSession);
 
 router.get('/menu/:name', async (req, res)=>{
     try{
@@ -19,20 +26,21 @@ router.get('/menu/:name', async (req, res)=>{
    
 })
 router.get('/cart', (req, res)=>{
-    res.send('cart')
+    res.render('cart')
 })
 router.post('/menu/:name', async (req, res)=>{
     const { name } = req.params
     const item = await Product.findOne({name: name})
     .populate('category')
-    console.log(item)
+    console.log('Here is your item !!!!!!',item)
 
     if (!req.session.shoppingCart) {
         req.session.shoppingCart = [];
     }  
     req.session.shoppingCart.push(req.body)
+   
     console.log('Here is your session !!!!!!', req.session.shoppingCart)
-    res.redirect(`/menu/${item.category.name}`)
+    res.redirect(`/`)
     console.log(req.body)
 })
 

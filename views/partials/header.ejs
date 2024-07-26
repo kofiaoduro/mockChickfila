@@ -2,8 +2,11 @@
     <div class="nav-bar">
         <i class="fa-solid fa-bars"></i>
         <div class="logo">
-            <a href="/"><img src="/imageFiles/logo.jpeg"></a>
+            <a href="/"><img src="/imageFiles/logo.jpeg" alt="Logo"></a>
         </div>
-        <a href="/cart"><i class="bi bi-bag"></i></a>
+        <a href="/cart" class="cart-icon">
+            <i class="bi bi-bag"></i>
+            <span><%= shoppingCart.length %></span>
+        </a>
     </div>
 </header>

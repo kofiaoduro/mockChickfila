@@ -168,3 +168,26 @@ const breakfast = async ()=>{
     ])
 }
 
+// associating beverages with the beverage category
+const bevProducts = async ()=>{
+    const bev = await Category.findOne({name: 'Beverages'})
+    console.log(bev)
+    const product = await Product.find({foodType: 'bev',})
+    product.map((prod)=>{
+        prod.category = bev
+        prod.save()
+    })
+}
+
+// associating sies with sides category
+const sidesProducts = async ()=>{
+    const sides = await Category.findOne({name: 'Sides'})
+    console.log(sides)
+    const product = await Product.find({foodType: 'sides',})
+    product.map((prod)=>{
+        prod.category = sides
+        prod.save()
+    })
+}
+
+

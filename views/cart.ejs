@@ -1,0 +1,17 @@
+<% layout('boilerplate/boiler') -%>
+<% if(cartItems && cartItems.length){ %>
+<div class="cart-wrapper">
+        <div class="cart-card">
+            <% for(let items of cartItems){ %>
+                <div class="cart-content">
+                    <img src="/imageFiles/<%= items.image %>" alt="<%= items.name %>">
+                    <div class="cart-info">
+                        <p>$<%= items.price %></p>
+                        <p><%= items.name %></p>
+                        <i class="bi bi-trash"></i>
+                     </div>
+                </div>
+           <% } %>
+        </div> 
+</div>
+<%  } %>

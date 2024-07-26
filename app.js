@@ -7,6 +7,8 @@ const Category = require('./models/category')
 const menuRoute = require('./routes/menuRoute')
 const session = require('express-session')
 const flash = require('connect-flash')
+const { addShoppingCartToLocals } = require('./middleware')
+const { loopThroughCartSession } = require('./middleware')
 // Set EJS as the view engine
 app.engine('ejs', engine);
 app.set('view engine', 'ejs');
@@ -27,15 +29,16 @@ app.use(session({
 app.use(flash())
 
 
-app.get('/', async (req, res)=>{
+app.get('/', addShoppingCartToLocals, loopThroughCartSession, async (req, res)=>{
     const categoryLinks = await Category.find({})
     .populate('products')
     console.log(categoryLinks)
     res.render('home', { categoryLinks })
+    console.log('Here is your session !!!!!!', req.session.shoppingCart)
 })
 
 
-app.use('/', menuRoute)
+app.use('/',  menuRoute)
 
 
 app.listen(port, ()=>{

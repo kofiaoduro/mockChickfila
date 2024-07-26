@@ -11,8 +11,9 @@
 <body>
     <%- include('../partials/header') %>
     <div class="wrapper">
-        <%- include('../partials/phoneBar', {categoryLinks: categoryLinks }) %>
+    <%- include('../partials/phoneBar', {categoryLinks: categoryLinks }) %>
         <%-body -%>
+        <%- include('../partials/cartPopup') %>
     </div>
     <%- include('../partials/footer.ejs') %>
 

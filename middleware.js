@@ -12,12 +12,16 @@ const fetchCategoryLinks = async (req, res, next) => {
 
 const addShoppingCartToLocals = (req, res, next) => {
     res.locals.shoppingCart = req.session.shoppingCart || [];
+    res.locals.individualItem = req.session.Item
     next();
 };
 
 
+
+
+
 const loopThroughCartSession = async (req, res, next)=>{
-    const cartItems = [];
+    const cartItems = []; 
     if(req.session.shoppingCart){
         for(let i = 0; i < req.session.shoppingCart.length; i++){
             const cartItem = await Product.findById(req.session.shoppingCart[i].id)
@@ -35,5 +39,5 @@ const loopThroughCartSession = async (req, res, next)=>{
 module.exports = {
     fetchCategoryLinks,
     addShoppingCartToLocals,
-    loopThroughCartSession
+    loopThroughCartSession,
 };

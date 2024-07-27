@@ -13,7 +13,9 @@
     <div class="wrapper">
     <%- include('../partials/phoneBar', {categoryLinks: categoryLinks }) %>
         <%-body -%>
-        <%- include('../partials/cartPopup') %>
+        <% if (showCartPopup) { %>
+            <%- include('../partials/cartPopup', { individualItem: individualItem }) %>
+        <% } %>
     </div>
     <%- include('../partials/footer.ejs') %>
 

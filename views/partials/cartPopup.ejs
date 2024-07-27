@@ -1,7 +1,20 @@
 <% if(cartItems && cartItems.length){ %>
 <div class="checkout-wrapper">
-    <div class="checkout-content">
-        <a href="/checkout">CheckOut</a>
+    <% if(individualItem){ %>
+        <div class="checkout-description">
+            <img src="/imageFiles/<%= individualItem.image %>" alt="<%= individualItem.name %>">
+            <div class="checkoutcontent-description">
+                <p><%= individualItem.name %></p>
+                <p><%= individualItem.price %></p>
+                <p><%= individualItem.description %></p>
+            </div>
+        </div>
+    <% } %>
+    <div class="Checkout-btn">
+        <% if(individualItem){ %>
+            <a href="/cart">View Bag (<%= cartItems.length %>)</a>
+        <% } %>
+        <a href="/checkout">Checkout</a>
     </div>
 </div>
 <% } %>

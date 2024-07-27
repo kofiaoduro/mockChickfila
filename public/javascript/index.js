@@ -4,6 +4,7 @@ const menuLinks = document.querySelector('.menu-links')
 const closeBtn = document.querySelector('.fa-x')
 const phoneBar = document.querySelector('.phone-bar')
 const bars = document.querySelector('.fa-bars')
+const checkout_wrapper = document.querySelector('.checkout-wrapper')
 closeBtn.addEventListener('click', ()=>{
     phoneBar.style.width = 0 ;
     phoneBar.style.transition = '0.4s ease-in-out';
@@ -25,3 +26,7 @@ arrowUp.addEventListener('click', ()=>{
     arrowUp.style.display = 'none'
     arrowDown.style.display = 'block'
 })
+
+setTimeout(() => {
+    checkout_wrapper.style.display = 'none';
+}, 10000);

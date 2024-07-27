@@ -33,7 +33,7 @@ app.get('/', addShoppingCartToLocals, loopThroughCartSession, async (req, res)=>
     const categoryLinks = await Category.find({})
     .populate('products')
     console.log(categoryLinks)
-    res.render('home', { categoryLinks })
+    res.render('home', { categoryLinks,  showCartPopup: false  })
     console.log('Here is your session !!!!!!', req.session.shoppingCart)
 })
 

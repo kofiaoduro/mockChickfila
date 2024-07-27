@@ -6,10 +6,10 @@ const Cart = require('../models/cart')
 const { fetchCategoryLinks } = require('../middleware')
 const { addShoppingCartToLocals } = require('../middleware')
 const { loopThroughCartSession } = require('../middleware')
-
 router.use(fetchCategoryLinks);
 router.use(addShoppingCartToLocals);
 router.use(loopThroughCartSession);
+
 
 router.get('/menu/:name', async (req, res)=>{
     try{
@@ -17,7 +17,7 @@ router.get('/menu/:name', async (req, res)=>{
         const { name} = req.params
         const categoryLink = await Category.findOne({name})
         .populate('products')
-        res.render('menu',{ categoryLink })
+        res.render('menu',{ categoryLink, itemOnly: res.locals.itemOnly, showCartPopup: true  })
         console.log(categoryLink)
     }
     catch(e){
@@ -26,7 +26,7 @@ router.get('/menu/:name', async (req, res)=>{
    
 })
 router.get('/cart', (req, res)=>{
-    res.render('cart')
+    res.render('cart', { showCartPopup: false } )
 })
 router.post('/menu/:name', async (req, res)=>{
     const { name } = req.params
@@ -36,12 +36,28 @@ router.post('/menu/:name', async (req, res)=>{
 
     if (!req.session.shoppingCart) {
         req.session.shoppingCart = [];
-    }  
+
+    } 
+    if(!req.session.Item){
+        req.session.Item = [];
+    }
+
+        if(req.body && req.body.id){
+            try{
+                const singleItem = await Product.findById(req.body.id)
+                if(singleItem){
+                    req.session.Item = singleItem
+                    console.log('Here is your single.item', req.session.Item)
+                }
+            }catch(e){
+                    console.log(e)
+            }
+        }
     req.session.shoppingCart.push(req.body)
-   
+    console.log(req.session.Item, 'Here Is YoUR iTEM oNLY')
     console.log('Here is your session !!!!!!', req.session.shoppingCart)
-    res.redirect(`/`)
-    console.log(req.body)
+    res.redirect(`/menu/${item.category.name}`)
+    console.log(req.body, 'Heere is the req.body')
 })
 
 

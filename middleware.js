@@ -36,8 +36,16 @@ const loopThroughCartSession = async (req, res, next)=>{
     
 }
 
+const isLoggedIn = (req, res, next)=>{
+    if(!req.session.currentUser){
+        res.redirect('/login')
+    }
+    next()
+}
+
 module.exports = {
     fetchCategoryLinks,
     addShoppingCartToLocals,
     loopThroughCartSession,
+    isLoggedIn
 };

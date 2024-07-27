@@ -5,6 +5,7 @@ const engine = require('ejs-mate');
 const path = require('path')
 const Category = require('./models/category')
 const menuRoute = require('./routes/menuRoute')
+const checkoutRoute = require('./routes/checkoutRoute')
 const session = require('express-session')
 const flash = require('connect-flash')
 const { addShoppingCartToLocals } = require('./middleware')
@@ -38,8 +39,10 @@ app.get('/', addShoppingCartToLocals, loopThroughCartSession, async (req, res)=>
 })
 
 
-app.use('/',  menuRoute)
 
+
+app.use('/',  menuRoute)
+app.use('/',  checkoutRoute)
 
 app.listen(port, ()=>{
     console.log('Lisining to port 3000')

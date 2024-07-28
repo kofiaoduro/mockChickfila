@@ -189,5 +189,6 @@ const sidesProducts = async ()=>{
         prod.save()
     })
 }
+sidesProducts()
 
 

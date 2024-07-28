@@ -6,6 +6,7 @@ const Cart = require('../models/cart')
 const { fetchCategoryLinks } = require('../middleware')
 const { addShoppingCartToLocals } = require('../middleware')
 const { loopThroughCartSession } = require('../middleware')
+const { isLoggedIn } = require('../middleware')
 router.use(fetchCategoryLinks);
 router.use(addShoppingCartToLocals);
 router.use(loopThroughCartSession);
@@ -13,23 +14,22 @@ router.use(loopThroughCartSession);
 
 router.get('/menu/:name', async (req, res)=>{
     try{
-        console.log('Got a get request')
         const { name} = req.params
         const categoryLink = await Category.findOne({name})
         .populate('products')
         res.render('menu',{ categoryLink, itemOnly: res.locals.itemOnly, showCartPopup: true  })
-        console.log(categoryLink)
     }
     catch(e){
         console.log(e)
     }
    
 })
-router.get('/cart', (req, res)=>{
+router.get('/cart',  (req, res)=>{
     res.render('cart', { showCartPopup: false } )
 })
 router.post('/menu/:name', async (req, res)=>{
     const { name } = req.params
+    console.log(req.body, 'My Body!!!!!!!!!!')
     const item = await Product.findOne({name: name})
     .populate('category')
     console.log('Here is your item !!!!!!',item)
@@ -54,10 +54,8 @@ router.post('/menu/:name', async (req, res)=>{
             }
         }
     req.session.shoppingCart.push(req.body)
-    console.log(req.session.Item, 'Here Is YoUR iTEM oNLY')
     console.log('Here is your session !!!!!!', req.session.shoppingCart)
     res.redirect(`/menu/${item.category.name}`)
-    console.log(req.body, 'Heere is the req.body')
 })
 
 

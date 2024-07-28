@@ -3,10 +3,9 @@ const router = express.Router()
 const { isLoggedIn } = require('../middleware')
 const passport = require('passport')
 const User = require('../models/user')
+const Stripe = require('stripe')
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
-router.get('/checkout', isLoggedIn, (req, res) => {
-    res.render('checkout');
-});
 router.get('/login', (req, res)=>{
     res.render('login', {showCartPopup: false  })
     
@@ -15,6 +14,8 @@ router.get('/login', (req, res)=>{
 router.get('/register', (req, res)=>{
     res.render('register', {showCartPopup: false  })
 })
+
+
 
 router.post('/register', async (req, res, next) => {
     const { username, password } = req.body;
@@ -51,6 +52,14 @@ router.post('/login', passport.authenticate('local', {
     console.log('Redirecting to home page');
     res.redirect('/');
 });
+
+
+
+router.post('/ordernow',  async (req, res)=>{
+    const { cartItems } = req.body;
+    console.log(req.body)
+    res.send(req.body)
+})
 
 
 module.exports = router

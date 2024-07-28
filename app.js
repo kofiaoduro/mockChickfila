@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 const express = require('express')
 const app = express()
 const port = 3000
@@ -13,17 +16,19 @@ const { loopThroughCartSession } = require('./middleware')
 const User = require('./models/user')
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
-
+const methodOverride = require('method-override')
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 // Set EJS as the view engine
 app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname + '/views' ));
-
 app.use('/cssFiles', express.static('public/css/app.css'))
 app.use('/imageFiles', express.static('public/images'))
 app.use('/javascript', express.static('public/javascript/index.js'))
 
 app.use(express.urlencoded({extended: true}))
+
+console.log(process.env.PUBLISHABLE_KEY)
 
 app.use(session({
     secret: 'My Secret',
@@ -37,6 +42,7 @@ app.use((req, res, next)=>{
     next()
 })
 
+app.use(methodOverride('_method'))
 app.use(passport.initialize());
 app.use(passport.session())
 passport.use(new LocalStrategy(User.authenticate()));

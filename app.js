@@ -10,6 +10,10 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const { addShoppingCartToLocals } = require('./middleware')
 const { loopThroughCartSession } = require('./middleware')
+const User = require('./models/user')
+const passport = require('passport')
+const LocalStrategy = require('passport-local')
+
 // Set EJS as the view engine
 app.engine('ejs', engine);
 app.set('view engine', 'ejs');
@@ -26,9 +30,18 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }))
-
 app.use(flash())
 
+app.use((req, res, next)=>{
+    res.locals.currentUser
+    next()
+})
+
+app.use(passport.initialize());
+app.use(passport.session())
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.get('/', addShoppingCartToLocals, loopThroughCartSession, async (req, res)=>{
     const categoryLinks = await Category.find({})

@@ -1,5 +1,6 @@
 const Category = require('./models/category');
 const Product = require('./models/product')
+const passport = require('passport')
 const fetchCategoryLinks = async (req, res, next) => {
     try {
         const categoryLinks = await Category.find({});
@@ -35,13 +36,17 @@ const loopThroughCartSession = async (req, res, next)=>{
     next();
     
 }
-
-const isLoggedIn = (req, res, next)=>{
-    if(!req.session.currentUser){
-        res.redirect('/login')
+const isLoggedIn = (req, res, next) => {
+    console.log('Session state before checking authentication:', req.session);
+    if (!req.isAuthenticated()) {
+        console.log('User not authenticated, setting returnTo:', req.originalUrl);
+        req.session.returnTo = req.originalUrl;
+        console.log('Session state after setting returnTo:', req.session);
+        return res.redirect('/login');
     }
-    next()
-}
+    next();
+};
+
 
 module.exports = {
     fetchCategoryLinks,

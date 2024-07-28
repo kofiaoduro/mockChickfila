@@ -243,3 +243,10 @@ const treatsProducts = async ()=>{
 
 
 
+const updateProduct = async ()=>{
+    console.log('HIIII')
+    const product = await Product.findOne({name: 'Icecream'})
+    product.image = 'https://res.cloudinary.com/dlhis6cii/image/upload/v1722201433/drink1_iogezg.jpg'
+    product.save()
+}
+updateProduct()

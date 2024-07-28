@@ -2,11 +2,27 @@
     <div class="nav-bar">
         <i class="fa-solid fa-bars"></i>
         <div class="logo">
-            <a href="/"><img src="/imageFiles/logo.jpeg" alt="Logo"></a>
+            <a href="/"><img src="https://res.cloudinary.com/dlhis6cii/image/upload/v1722201834/logo_owsyrm.jpg" alt="Logo"></a>
         </div>
-        <a href="/cart" class="cart-icon">
+        <a href="/cart" class="cart-icon" id="icon-bag">
             <i class="bi bi-bag"></i>
             <span><%= shoppingCart.length %></span>
         </a>
+        <div class="navbar-links">
+            <a href="/">Sign In</a>
+            <a href="/checkout">Order Now</a>
+            <a href="/cart" class="cart-icon">
+                <i class="bi bi-bag"></i>
+                <span><%= shoppingCart.length %></span>
+            </a>
+        </div>
     </div>
 </header>
+
+<div class="route-container">
+        <div class="route-content">
+            <% for(link of categoryLinks){ %>
+            <a href="/menu/<%= link.name %>"><%= link.name %></a>
+            <% } %>
+        </div>
+</div>

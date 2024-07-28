@@ -4,33 +4,30 @@
         <p><%= categoryLink.name %></p>
         <p>Availability may differ at different locations.</p>
     </div>
-    <div class="main-section">
-        <% categoryLink.products.forEach((element, i)=>{ %>
-            <div class="card">
-                <a href="/"><img src="/imageFiles/<%=element.image %>"></a>
-                <div class="">
-                    <div class="card-info">
-                        <a href="/"><%= element.name %></a>
-                        <p>$<%= element.price %></p>
-                        <p><%= element.description %> </p>
-                    </div>
-                    <div class="">
-                        <form action="/menu/<%= element.name %>" method="post">
-                            <label for="qty">qty:</label>
-                            <select name="qty" id="qty">
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                            </select>
-                            <br><br>
-                            <button type="submit" name="id" value ="<%= element._id %>">Add to Cart</button>
-                        </form>
-                       <!-- <a href="/">Add to Cart</a> -->
-                    </div>
-                </div>
-            </div>          
-       <% }) %>
-       <a href="/cart">Checkout</a>
+    <div class="main-items">
+        <div class="card">
+            <% categoryLink.products.forEach((element, i)=>{ %>
+                <div class="card-content">
+                    <a href="/"><img src="/imageFiles/<%=element.image %>"></a>
+                        <div class="card-info">
+                            <p><%= element.name %><p>
+                            <p>$<%= element.price %></p>
+                            <p><%= element.description %> </p>
+                            <form action="/menu/<%= element.name %>" method="post">
+                                <label for="qty">qty:</label>
+                                <select name="qty" id="qty">
+                                  <option value="1">1</option>
+                                  <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                </select>
+                                <br><br>
+                                <button type="submit" name="id" value ="<%= element._id %>">Add to Cart</button>
+                            </form>
+                        </div>
+                </div>          
+           <% }) %>
+        </div>
+       <a id="checkout-btn" href="/cart">View Bag</a>
     </div>
 </main>

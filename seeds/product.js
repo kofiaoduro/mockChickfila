@@ -64,7 +64,7 @@ const findProducts = async ()=>{
 const breakfast = async ()=>{
     Product.insertMany([
         //breakfast
-        {
+        /* {
             name: 'Toast With Egg',
             foodType: 'breakfast',
             description: '290 Cal',
@@ -164,9 +164,24 @@ const breakfast = async ()=>{
             description: '190 Cal',
             image: 'drink7.jpg',
             price: 2.40
-        }
+        }*/
+       {
+        name: 'Icecream',
+        foodType: 'treats',
+        description: '490 Cal',
+        image: 'icecream.jpg',
+        price: 4.90
+       },
+       {
+        name: 'Cupcake',
+        foodType: 'treats',
+        description: '380 Cal',
+        image: 'cupcake.jpg',
+        price: 3.80
+       }
     ])
 }
+
 
 // associating beverages with the beverage category
 const bevProducts = async ()=>{
@@ -189,6 +204,42 @@ const sidesProducts = async ()=>{
         prod.save()
     })
 }
-sidesProducts()
+
+//associating salads with a category
+const saladProducts = async ()=>{
+    const salad = await Category.findOne({name: 'Salads'})
+    console.log(salad)
+    const product = await Product.find({foodType: 'salad',})
+    product.map((prod)=>{
+        prod.category = salad
+        prod.save()
+    })
+}
+
+
+//associating breakfast with a category
+const breakfastProducts = async ()=>{
+    const breakfast = await Category.findOne({name: 'Breakfast'})
+    console.log(breakfast)
+    const product = await Product.find({foodType: 'breakfast',})
+    product.map((prod)=>{
+        prod.category = breakfast
+        prod.save()
+    })
+}
+
+//associating treats with a category
+const treatsProducts = async ()=>{
+    const treats = await Category.findOne({name: 'Treats'})
+    console.log(treats)
+    const product = await Product.find({foodType: 'treats',})
+    product.map((prod)=>{
+        prod.category = treats
+        prod.save()
+    })
+}
+
+
+
 
 

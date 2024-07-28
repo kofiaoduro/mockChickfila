@@ -8,20 +8,14 @@
                     <div class="cart-info">
                         <p>$<%= items.price %></p>
                         <p><%= items.name %></p>
-                        <form action="/action_page.php">
-                            <label for="cars">qty:</label>
-                            <select name="cars" id="cars">
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                            </select>
-                            <br><br>
-                        </form>
+                        <p>qty: <%= items.qty %></p>
                         <i class="bi bi-trash"></i>
                      </div>
                 </div>
            <% } %>
+           <form action="/checkout" method="post">
+            <button type="submit">Order Now</button>
+           </form>
         </div> 
 </div>
 <%  } %>

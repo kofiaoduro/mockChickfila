@@ -24,11 +24,15 @@ const addShoppingCartToLocals = (req, res, next) => {
 const loopThroughCartSession = async (req, res, next)=>{
     const cartItems = []; 
     if(req.session.shoppingCart){
+        const qty = parseInt(req.body.qty, 10);  // Convert qty to a number
         for(let i = 0; i < req.session.shoppingCart.length; i++){
             const cartItem = await Product.findById(req.session.shoppingCart[i].id)
-            console.log('OURRRR iTEMMMMMMM', cartItem)
-            cartItems.push(cartItem)
-            console.log(cartItems, 'Cart Itemmsssss')
+            if(cartItem){
+                cartItem.qty = parseInt(req.session.shoppingCart[i].qty, 10);
+                console.log('OURRRR iTEMMMMMMM', cartItem)
+                cartItems.push(cartItem)
+                console.log(cartItems, 'Cart Itemmsssss')
+            }
         }res.locals.cartItems = cartItems;
     } else {
         res.locals.cartItems = [];
@@ -37,11 +41,8 @@ const loopThroughCartSession = async (req, res, next)=>{
     
 }
 const isLoggedIn = (req, res, next) => {
-    console.log('Session state before checking authentication:', req.session);
     if (!req.isAuthenticated()) {
-        console.log('User not authenticated, setting returnTo:', req.originalUrl);
         req.session.returnTo = req.originalUrl;
-        console.log('Session state after setting returnTo:', req.session);
         return res.redirect('/login');
     }
     next();

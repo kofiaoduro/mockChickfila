@@ -28,7 +28,7 @@ app.use('/javascript', express.static('public/javascript/index.js'))
 
 app.use(express.urlencoded({extended: true}))
 
-console.log(process.env.PUBLISHABLE_KEY)
+
 
 app.use(session({
     secret: 'My Secret',

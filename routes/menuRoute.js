@@ -24,7 +24,7 @@ router.get('/menu/:name', async (req, res)=>{
     }
    
 })
-router.get('/cart',  (req, res)=>{
+router.get('/cart',  isLoggedIn, (req, res)=>{
     res.render('cart', { showCartPopup: false } )
 })
 router.post('/menu/:name', async (req, res)=>{

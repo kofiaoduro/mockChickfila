@@ -89,3 +89,22 @@ const getCategory = async ()=>{
 
 }
 */
+
+/*breakfast Category
+const getCategory = async ()=>{
+    const breakfast = await Category.findOne({name: 'Breakfast'})
+    const products = await Product.find({foodType: 'breakfast'});
+    breakfast.products = products
+    console.log(breakfast)
+    await breakfast.save()
+}
+*/
+//Treats Category
+const getCategory = async ()=>{
+    const treats = await Category.findOne({name: 'Treats'})
+    const products = await Product.find({foodType: 'treats'});
+    treats.products = products
+    console.log(treats)
+    await treats.save()
+}
+

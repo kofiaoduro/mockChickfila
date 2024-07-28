@@ -1,11 +1,13 @@
+
 const express = require('express')
 const router = express.Router()
 const { isLoggedIn } = require('../middleware')
 const passport = require('passport')
 const User = require('../models/user')
 const Stripe = require('stripe')
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
-
+const Product = require('../models/product')
+const { loopThroughCartSession } = require('../middleware')
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 router.get('/login', (req, res)=>{
     res.render('login', {showCartPopup: false  })
     
@@ -42,24 +44,54 @@ router.post('/login', passport.authenticate('local', {
     failureRedirect: '/login',
     keepSessionInfo: true
 }), (req, res) => {
-    console.log('Session before redirect:', req.session);
     if (req.session.returnTo) {
         const redirectUrl = req.session.returnTo;
-        req.session.returnTo = null; // Clear the original URL from the session
-        console.log('Redirecting to:', redirectUrl);
+        req.session.returnTo = null; 
         return res.redirect(redirectUrl);
     }
-    console.log('Redirecting to home page');
     res.redirect('/');
 });
 
 
 
-router.post('/ordernow',  async (req, res)=>{
-    const { cartItems } = req.body;
-    console.log(req.body)
-    res.send(req.body)
+router.post('/checkout', loopThroughCartSession, async (req, res)=>{
+    console.log(req.session.shoppingCart)
+    console.log('Cart Items:', res.locals.cartItems);
+    const lineItems = res.locals.cartItems.map(item => ({
+        price_data: {
+            currency: 'usd',
+            product_data: {
+                name: item.name,
+                images: [`${process.env.BASE_URL}/imageFiles/${item.image}`], // Add image URL,
+            },
+            unit_amount: Math.round(item.price * 100),
+        },
+        quantity: item.qty,
+    }));
+    try{
+        const session = await stripe.checkout.sessions.create({
+            line_items:lineItems,
+            mode: 'payment',
+            shipping_address_collection: {
+                allowed_countries: ['US', 'CA']
+            },
+            success_url: `${process.env.BASE_URL}/complete`,
+            cancel_url: `${process.env.BASE_URL}/cancel`
+        })
+        res.redirect(session.url)
+    }
+    catch(e){
+        console.log(e)
+    }
+    
 })
 
 
+router.get('/complete', (req, res)=>{
+    res.send('Your payment was successful')
+})
+
+router.get('/cancel', (req, res)=>{
+    res.redirect('/cart')
+})
 module.exports = router

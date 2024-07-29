@@ -3,12 +3,14 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const express = require('express')
 const app = express()
+const mongoose = require('mongoose')
 const port = 3000
 const engine = require('ejs-mate');
 const path = require('path')
 const Category = require('./models/category')
 const menuRoute = require('./routes/menuRoute')
 const checkoutRoute = require('./routes/checkoutRoute')
+const uploadRoute = require('./routes/uploadRoute')
 const session = require('express-session')
 const flash = require('connect-flash')
 const { addShoppingCartToLocals } = require('./middleware')
@@ -29,6 +31,22 @@ app.use('/javascript', express.static('public/javascript/index.js'))
 app.use(express.urlencoded({extended: true}))
 
 
+const dbUrl = process.env.DB_URL
+//'mongodb://127.0.0.1:27017/chickfilaApp'
+
+main().catch(err => console.log(err));
+
+async function main() {
+
+        try{
+            await mongoose.connect('mongodb://127.0.0.1:27017/chickfilaApp');
+            console.log('database connected')
+        }
+        catch(e){
+            console.log(e)
+        }
+  
+}
 
 app.use(session({
     secret: 'My Secret',
@@ -49,6 +67,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+
 app.get('/', addShoppingCartToLocals, loopThroughCartSession, async (req, res)=>{
     const categoryLinks = await Category.find({})
     .populate('products')
@@ -62,6 +81,7 @@ app.get('/', addShoppingCartToLocals, loopThroughCartSession, async (req, res)=>
 
 app.use('/',  menuRoute)
 app.use('/',  checkoutRoute)
+app.use('/', uploadRoute)
 
 app.listen(port, ()=>{
     console.log('Lisining to port 3000')

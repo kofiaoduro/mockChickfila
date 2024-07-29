@@ -1,7 +1,9 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const  passportLocalMongoose = require('passport-local-mongoose')
-main().catch(err => console.log(err));
+
+
+/* main().catch(err => console.log(err));
 
 async function main() {
 
@@ -14,7 +16,7 @@ async function main() {
         }
   
 }
-
+*/
 
 const userSchema = new Schema({})
 

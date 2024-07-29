@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Product = require('../models/product')
 const Schema = mongoose.Schema
 
-main().catch(err => console.log(err));
+/* main().catch(err => console.log(err));
 
 async function main() {
 
@@ -15,7 +15,7 @@ async function main() {
         }
   
 }
-
+*/
 cartSchema = new Schema({
     products: [{type: Schema.Types.ObjectId, ref: 'Product'}]
 })

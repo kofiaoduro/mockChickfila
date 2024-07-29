@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Category = require('./category');
 const Schema = mongoose.Schema
+const dbUrl = process.env.DB_URL
 
 main().catch(err => console.log(err));
 

@@ -20,6 +20,8 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const methodOverride = require('method-override')
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const MongoStore = require('connect-mongo');
+const { error } = require('console');
 // Set EJS as the view engine
 app.engine('ejs', engine);
 app.set('view engine', 'ejs');
@@ -48,10 +50,25 @@ async function main() {
   
 }
 
+const store = new MongoStore({
+    mongoUrl: dbUrl,
+    secret: 'This is my secret',
+    touchAfter: 24 * 60 * 60
+});
+
+store.on("error", function(e){
+    console.log('Session Error')
+})
 app.use(session({
+    store,
     secret: 'My Secret',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
 }))
 app.use(flash())
 

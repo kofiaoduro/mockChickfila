@@ -50,20 +50,19 @@ router.post('/category/new', upload.single('image'), async (req, res)=>{
 })
 
 router.post('/products/new', upload.single('image'), async (req, res)=>{
-    res.send(req.body)
     const { name, description, price, foodType} = req.body.Product
     const newPrice = parseInt(price)
     const newDescription = parseInt(description)
-    const category = await Category.findOne(req.body.Product.category)
+    const ogCategory = await Category.findOne({name: req.body.category})
+    console.log(ogCategory, 'Hereeeee is your category')
     const product = new Product({name: name, foodType,  description:newDescription, price: newPrice})
-    product.image = {url: req.file.path, filename: req.file.filename}
-    product.category = category
-    await product.save()
-    category.products.push(product)
-    await category.save()
-    console.log(req.body)
     console.log(product, "Product!!!!!!!!")
-    console.log(category, 'Hereeeee is your category')
+    product.image = {url: req.file.path, filename: req.file.filename}
+    product.category = ogCategory
+    await product.save()
+    ogCategory.products.push(product)
+    await ogCategory.save()
+    res.redirect('/products/new')
 })
 
 

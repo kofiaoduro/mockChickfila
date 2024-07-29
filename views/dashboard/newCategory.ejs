@@ -1,0 +1,20 @@
+<% layout('boilerplate/boiler') -%>
+<div class="Category-container">
+    <div class="Category-content">
+        <form action="/category/new" method="post" enctype="multipart/form-data">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="category-name" placeholder="category-name"  name="category[name]">
+                <label for="category-name">Category Name</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="category-description" placeholder="category-description"  name="category[description]">
+                <label for="category-description">Category description</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="file" class="form-control" id="category-image"  name="image">
+                <label for="category-image">Category Image</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+    </div>
+</div>

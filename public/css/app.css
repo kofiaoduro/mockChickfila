@@ -288,6 +288,10 @@ button:hover {
     align-items: center;
     justify-content: center;
 }
+.Category-content{
+    width: 90%;
+    margin: 1rem auto;
+}
 footer{
     margin-top: auto;
     background-color: #ddd;

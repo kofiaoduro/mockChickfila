@@ -2,9 +2,17 @@
 <div class="Category-container">
     <div class="Category-content">
         <form action="/category/new" method="post" enctype="multipart/form-data">
+            <label for="cars">Choose a Category:</label>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="category-name" placeholder="category-name"  name="category[name]">
-                <label for="category-name">Category Name</label>
+                <select name="category[name]" id="category-name">
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Entrees">Entrees</option>
+                    <option value="Salads">Salads</option>
+                    <option value="Sides">Sides</option>
+                    <option value="Kids Meals">Kids Meals</option>
+                    <option value="Treats">Treats</option>
+                    <option value="Beverages">Beverages</option>
+                  </select>
             </div>
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="category-description" placeholder="category-description"  name="category[description]">

@@ -3,7 +3,7 @@ const Category = require('./category');
 const Schema = mongoose.Schema
 const dbUrl = process.env.DB_URL
 
-main().catch(err => console.log(err));
+/* main().catch(err => console.log(err));
 
 async function main() {
 
@@ -16,7 +16,7 @@ async function main() {
         }
   
 }
-
+*/
 
 const productSchema = new Schema({
     name: {
@@ -26,10 +26,11 @@ const productSchema = new Schema({
         type: String
     },
     description: {
-        type: String
+        type: Number
     },
     image: {
-        type: String
+        url: String,
+        filename: String
     },
     price: {
         type: Number

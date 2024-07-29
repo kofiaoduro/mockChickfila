@@ -4,7 +4,7 @@ const Product = require('../models/product')
 
 
 
- main().catch(err => console.log(err));
+/*main().catch(err => console.log(err));
 
 async function main() {
 
@@ -17,19 +17,22 @@ async function main() {
         }
   
 }
-
+*/
 
 const categorySchema = new Schema({
     name: {
         type: String,
-        enum: ['Breakfast', 'Entrees', 'Salads', 'Sides', 'Kids Meals', 'Treats', 'Beverages', '']
+        enum: ['Breakfast', 'Entrees', 'Salads', 'Sides', 'Kids Meals', 'Treats', 'Beverages']
     },
     description:{
         type: String
     },
-    image: {
-        type:String
-    },
+    image: 
+        {
+            url: String,
+            filename: String
+        }
+        ,
     products: [{type: Schema.Types.ObjectId, ref: 'Product'}]
 })
 

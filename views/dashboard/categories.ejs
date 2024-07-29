@@ -1,0 +1,12 @@
+<% layout('boilerplate/boiler') -%>
+<div class="categories-container">
+    <a href="/category/new">Add new Category</a>
+    <a href="/products/new">Add new Product</a>
+    <div class="categories-content">
+        <P>Category List</P>
+        <% for(let category of categories){ %>
+            <a href="/category/<%= category.name %>"><%= category.name %></a>
+       <% } %>
+
+    </div>
+</div>

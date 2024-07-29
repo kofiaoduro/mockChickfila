@@ -46,6 +46,7 @@ router.post('/login', passport.authenticate('local', {
 }), (req, res) => {
     if (req.session.returnTo) {
         const redirectUrl = req.session.returnTo;
+        console.log(redirectUrl, 'This is your return To')
         req.session.returnTo = null; 
         return res.redirect(redirectUrl);
     }
@@ -57,12 +58,12 @@ router.post('/login', passport.authenticate('local', {
 router.post('/checkout', loopThroughCartSession, async (req, res)=>{
     console.log(req.session.shoppingCart)
     console.log('Cart Items:', res.locals.cartItems);
-    const lineItems = res.locals.cartItems.map(item => ({
+   const lineItems = res.locals.cartItems.map(item => ({
         price_data: {
             currency: 'usd',
             product_data: {
                 name: item.name,
-                images: [`${process.env.BASE_URL}/imageFiles/${item.image}`], // Add image URL,
+                images: [item.image.url], // Add image URL,
             },
             unit_amount: Math.round(item.price * 100),
         },
@@ -78,12 +79,12 @@ router.post('/checkout', loopThroughCartSession, async (req, res)=>{
             success_url: `${process.env.BASE_URL}/complete`,
             cancel_url: `${process.env.BASE_URL}/cancel`
         })
+        console.log(session)
         res.redirect(session.url)
     }
     catch(e){
         console.log(e)
     }
-    
 })
 
 

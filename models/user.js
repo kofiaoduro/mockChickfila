@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 const  passportLocalMongoose = require('passport-local-mongoose')
 
 
-/* main().catch(err => console.log(err));
+/*main().catch(err => console.log(err));
 
 async function main() {
 

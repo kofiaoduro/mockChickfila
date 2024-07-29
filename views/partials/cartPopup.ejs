@@ -2,7 +2,7 @@
 <div class="checkout-wrapper">
     <% if(individualItem){ %>
         <div class="checkout-description">
-            <img src="/imageFiles/<%= individualItem.image %>" alt="<%= individualItem.name %>">
+            <img src="<%= individualItem.image.url %>" alt="<%= individualItem.name %>">
             <div class="checkoutcontent-description">
                 <p><%= individualItem.name %></p>
                 <p><%= individualItem.price %></p>

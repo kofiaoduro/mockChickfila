@@ -7,7 +7,7 @@
         <div class="main-section">
             <% for(link of categoryLinks){ %>
                 <div class="category-container">
-                    <img src="/imageFiles/<%= link.image%>">
+                    <img src="<%= link.image.url %>">
                     <div class="category-content">
                         <a href="/menu/<%= link.name %>"><%= link.name %></a>
                         <p><%= link.description %></p>

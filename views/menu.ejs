@@ -8,7 +8,7 @@
         <div class="card">
             <% categoryLink.products.forEach((element, i)=>{ %>
                 <div class="card-content">
-                    <a href="/"><img src="/imageFiles/<%=element.image %>"></a>
+                    <img src="<%=element.image.url %>">
                         <div class="card-info">
                             <p><%= element.name %><p>
                             <p>$<%= element.price %></p>

@@ -18,6 +18,7 @@ router.get('/menu/:name', async (req, res)=>{
         const categoryLink = await Category.findOne({name})
         .populate('products')
         res.render('menu',{ categoryLink, itemOnly: res.locals.itemOnly, showCartPopup: true  })
+        console.log(categoryLink)
     }
     catch(e){
         console.log(e)
@@ -45,6 +46,7 @@ router.post('/menu/:name', async (req, res)=>{
         if(req.body && req.body.id){
             try{
                 const singleItem = await Product.findById(req.body.id)
+                .populate('category')
                 if(singleItem){
                     req.session.Item = singleItem
                     console.log('Here is your single.item', req.session.Item)

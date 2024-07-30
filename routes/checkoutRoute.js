@@ -7,7 +7,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const Product = require('../models/product');
 const { loopThroughCartSession } = require('../middleware');
 
-const BASE_URL = process.env.PORT || "http://localhost:3000/";
+const BASE_URL = 'https://protected-bayou-30650-01c800256a90.herokuapp.com/' || "http://localhost:3000/";
 
 router.get('/login', (req, res) => {
     res.render('login', { showCartPopup: false });
@@ -59,6 +59,7 @@ router.post('/checkout', loopThroughCartSession, async (req, res) => {
             currency: 'usd',
             product_data: {
                 name: item.name,
+                images: [item.image.thumbnail || item.image.url], // Use the thumbnail URL
             },
             unit_amount: Math.round(item.price * 100),
         },

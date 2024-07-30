@@ -49,10 +49,10 @@ async function main() {
         }
   
 }
-
+const secret = process.env.SECRET || "This is my SECRET"
 const store = new MongoStore({
     mongoUrl: dbUrl,
-    secret: 'This is my secret',
+    secret,
     touchAfter: 24 * 60 * 60
 });
 
@@ -61,7 +61,7 @@ store.on("error", function(e){
 })
 app.use(session({
     store,
-    secret: 'My Secret',
+    secret,
     resave: false,
     saveUninitialized: false,
     cookie: {

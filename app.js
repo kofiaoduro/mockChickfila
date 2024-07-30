@@ -42,6 +42,7 @@ async function main() {
 
         try{
             await mongoose.connect(dbUrl || 'mongodb://127.0.0.1:27017/chickfilaApp');
+            serverSelectionTimeoutMS: 30000, // Increase server selection timeout
             console.log('database connected')
         }
         catch(e){
@@ -57,8 +58,9 @@ const store = new MongoStore({
 });
 
 store.on("error", function(e){
-    console.log('Session Error')
-})
+    console.error('Session Store Error:', e);
+});
+
 app.use(session({
     store,
     secret,

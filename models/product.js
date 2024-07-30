@@ -24,7 +24,7 @@ const imageSchema = new Schema({
     _id: false
   })
   imageSchema.virtual('thumbnail').get(function(){
-    return this.url.replace('/upload', '/upload/w_400,c_fill,q_auto:best')
+    return this.url.replace('/upload', '/upload/w_600,c_fill,q_auto:best')
 })
 
 const productSchema = new Schema({

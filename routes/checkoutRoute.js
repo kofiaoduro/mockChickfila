@@ -59,7 +59,6 @@ router.post('/checkout', loopThroughCartSession, async (req, res) => {
             currency: 'usd',
             product_data: {
                 name: item.name,
-                images: [item.image.thumbnail || item.image.url], // Use the thumbnail URL
             },
             unit_amount: Math.round(item.price * 100),
         },

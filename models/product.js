@@ -18,6 +18,15 @@ async function main() {
 }
 */
 
+const imageSchema = new Schema({
+    url: String,
+    filename: String,
+    _id: false
+  })
+  imageSchema.virtual('thumbnail').get(function(){
+    return this.url.replace('/upload', '/upload/w_400,c_fill,q_auto:best')
+})
+
 const productSchema = new Schema({
     name: {
         type: String
@@ -28,10 +37,7 @@ const productSchema = new Schema({
     description: {
         type: Number
     },
-    image: {
-        url: String,
-        filename: String
-    },
+    image: imageSchema,
     price: {
         type: Number
     },

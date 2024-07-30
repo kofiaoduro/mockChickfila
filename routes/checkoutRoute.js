@@ -76,8 +76,8 @@ router.post('/checkout', loopThroughCartSession, async (req, res)=>{
             shipping_address_collection: {
                 allowed_countries: ['US', 'CA']
             },
-            success_url: `${process.env.BASE_URL}/complete`,
-            cancel_url: `${process.env.BASE_URL}/cancel`
+            success_url: `${process.env.process.env.PORT}/complete`,
+            cancel_url: `${process.env.process.env.PORT}/cancel`
         })
         res.redirect(session.url)
     }

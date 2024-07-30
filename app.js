@@ -51,10 +51,10 @@ async function main() {
   
 }
 const secret = process.env.SECRET || "This is my SECRET"
-const store = new MongoStore({
+const store = MongoStore.create({
     mongoUrl: dbUrl,
     secret,
-    touchAfter: 24 * 60 * 60
+    touchAfter: 24 * 60 * 60,
 });
 
 store.on("error", function(e){
@@ -103,7 +103,7 @@ app.use('/',  checkoutRoute)
 app.use('/', uploadRoute)
 
 app.listen(port, ()=>{
-    console.log('Lisining to port 3000')
+    console.log(`Lisining to port ${port}`)
 })
 
 

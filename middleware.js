@@ -20,26 +20,30 @@ const addShoppingCartToLocals = (req, res, next) => {
 
 
 
-
-const loopThroughCartSession = async (req, res, next)=>{
+const loopThroughCartSession = async (req, res, next) => {
     const cartItems = []; 
-    if(req.session.shoppingCart){
-        const qty = parseInt(req.body.qty, 10);  // Convert qty to a number
-        for(let i = 0; i < req.session.shoppingCart.length; i++){
-            const cartItem = await Product.findById(req.session.shoppingCart[i].id)
-            if(cartItem){
-                cartItem.qty = parseInt(req.session.shoppingCart[i].qty, 10);
-                console.log('OURRRR iTEMMMMMMM', cartItem)
-                cartItems.push(cartItem)
-                console.log(cartItems, 'Cart Itemmsssss')
+    if (req.session.shoppingCart) {
+        try {
+            for (let i = 0; i < req.session.shoppingCart.length; i++) {
+                const cartItem = await Product.findById(req.session.shoppingCart[i].id);
+                if (cartItem) {
+                    cartItem.qty = parseInt(req.session.shoppingCart[i].qty, 10);
+                    console.log('OURRRR iTEMMMMMMM', cartItem);
+                    cartItems.push(cartItem);
+                    console.log(cartItems, 'Cart Itemmsssss');
+                }
             }
-        }res.locals.cartItems = cartItems;
+            res.locals.cartItems = cartItems;
+        } catch (error) {
+            console.error('Error fetching cart items:', error);
+            res.locals.cartItems = [];
+        }
     } else {
         res.locals.cartItems = [];
     }
     next();
-    
-}
+};
+
 const isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
         req.session.returnTo = req.originalUrl;

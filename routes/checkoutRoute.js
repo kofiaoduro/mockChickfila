@@ -8,6 +8,9 @@ const Stripe = require('stripe')
 const Product = require('../models/product')
 const { loopThroughCartSession } = require('../middleware')
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
+const BASE_URL = process.env.PORT || "http://localhost:3000"
+ 
 router.get('/login', (req, res)=>{
     res.render('login', {showCartPopup: false  })
     
@@ -58,7 +61,7 @@ router.post('/login', passport.authenticate('local', {
 router.post('/checkout', loopThroughCartSession, async (req, res)=>{
     console.log(req.session.shoppingCart)
     console.log('Cart Items:', res.locals.cartItems);
-   const lineItems = res.locals.cartItems.map(item => ({
+    const lineItems = res.locals.cartItems.map(item => ({
         price_data: {
             currency: 'usd',
             product_data: {
@@ -76,8 +79,8 @@ router.post('/checkout', loopThroughCartSession, async (req, res)=>{
             shipping_address_collection: {
                 allowed_countries: ['US', 'CA']
             },
-            success_url: `${process.env.process.env.PORT}/complete`,
-            cancel_url: `${process.env.process.env.PORT}/cancel`
+            success_url: `${process.env.BASE_URL}/complete`,
+            cancel_url: `${process.env.BASE_URL}/cancel`
         })
         res.redirect(session.url)
     }

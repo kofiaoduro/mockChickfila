@@ -104,7 +104,8 @@ connectToDatabase().then(() => {
     app.use('/', checkoutRoute);
     app.use('/', uploadRoute);
 
-    app.listen(port, () => {
+    const server = app.listen(port, () => {
         console.log(`Listening on port ${port}`);
     });
+    server.setTimeout(50000);
 });

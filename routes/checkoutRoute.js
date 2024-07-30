@@ -79,7 +79,6 @@ router.post('/checkout', loopThroughCartSession, async (req, res)=>{
             success_url: `${process.env.BASE_URL}/complete`,
             cancel_url: `${process.env.BASE_URL}/cancel`
         })
-        console.log(session)
         res.redirect(session.url)
     }
     catch(e){

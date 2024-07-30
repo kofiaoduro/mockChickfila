@@ -77,7 +77,8 @@ connectToDatabase().then(() => {
     app.use(flash());
 
     app.use((req, res, next) => {
-        res.locals.currentUser = req.user;
+        res.locals.currentUser = req.session.currentUser;
+        console.log(req.user, 'req.user !!!!!!!!!!!!!!!!!!!!')
         next();
     });
 

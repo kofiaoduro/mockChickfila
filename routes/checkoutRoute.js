@@ -12,7 +12,17 @@ const BASE_URL = 'https://protected-bayou-30650-01c800256a90.herokuapp.com/' || 
 router.get('/login', (req, res) => {
     res.render('login', { showCartPopup: false });
 });
-
+router.get('/logout', (req, res) => {
+    if (req.session.shoppingCart) {
+        req.session.shoppingCart = null; // Destroy the shopping cart session
+    }
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/'); // Redirect to home or another appropriate page
+    });
+});
 router.get('/register', (req, res) => {
     res.render('register', { showCartPopup: false });
 });
@@ -48,6 +58,7 @@ router.post('/login', passport.authenticate('local', {
         req.session.returnTo = null;
         return res.redirect(redirectUrl);
     }
+    req.session.currentUser = req.user
     res.redirect('/');
 });
 

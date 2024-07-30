@@ -9,7 +9,11 @@
             <span><%= shoppingCart.length %></span>
         </a>
         <div class="navbar-links">
-            <a href="/login">Sign In</a>
+            <% if(currentUser){ %>
+                <a href="/logout">Log out</a>
+            <% }else{ %>
+                <a href="/login">Sign In</a>
+            <% } %>
             <a href="/checkout">Order Now</a>
             <a href="/cart" class="cart-icon">
                 <i class="bi bi-bag"></i>

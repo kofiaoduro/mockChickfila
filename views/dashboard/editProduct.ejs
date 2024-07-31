@@ -1,0 +1,50 @@
+<% layout('boilerplate/boiler') -%><% layout('boilerplate/boiler') -%>
+<div class="Category-container">
+    <p>UPDATE: <%= product.name %></p>
+    <div class="Category-content">
+        <form action="/product/<%=product._id %>/?_method=PUT" method="post" enctype="multipart/form-data">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="Product-name"   name="Product[name]">
+                <label for="Product-name"><%= product.name %></label>
+            </div>
+            <label for="cars">Food Type Category</label>
+            <div class="form-floating mb-3">
+                <select name="Product[foodType]" id="category-name">
+                    <option value="breakfast">breakfast</option>
+                    <option value="entree">entree</option>
+                    <option value="salad">salad</option>
+                    <option value="side">sides</option>
+                    <option value="kids Meal">Kids Meal</option>
+                    <option value="treat">treat</option>
+                    <option value="Beverage">beverage</option>
+                  </select>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="Product-description"   name="Product[description]">
+                <label for="category-description">Product calories</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="file" class="form-control" id="category-image"  name="image">
+                <label for="category-image">Category Image</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="Product"  name="Product[price]" step=".01">
+                <label for="Product-price">Product Price</label>
+            </div>
+            <label for="cars">Associated Category</label>
+            <div class="form-floating mb-3">
+                <select name="category" id="category-name">
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Entrees">Entrees</option>
+                    <option value="Salads">Salads</option>
+                    <option value="Sides">Sides</option>
+                    <option value="Kids Meals">Kids Meals</option>
+                    <option value="Treats">Treats</option>
+                    <option value="Beverages">Beverages</option>
+                  </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+    </div>
+</div>
+

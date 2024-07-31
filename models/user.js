@@ -18,7 +18,11 @@ async function main() {
 }
 */
 
-const userSchema = new Schema({})
+const userSchema = new Schema({
+    member_Status: {
+        type: String
+    }
+})
 
 userSchema.plugin(passportLocalMongoose)
 

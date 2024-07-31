@@ -1,0 +1,32 @@
+<% layout('boilerplate/boiler') -%>
+<div class="dashboard-grid">
+    <div class="dash-sideContainer">
+        <div class="side-content">
+            <a href="/"><i class="fa-solid fa-plus">Add new User</i></a>
+        </div>
+    </div>
+    <div class="dashboard-container">
+        <%if(products && !products.length){ %>
+            <p>No Recent Product Updates At this time</p>
+        <% } %>
+        <% if(products && products.length){ %>
+            <p>Recent Product Updates</p>
+            <div class="dashboard-content">
+                <div class="card">
+                    <% for(let prod of products){ %>
+                        <div class="card-content">
+                            <img src="<%=prod.image.url%>">
+                                <div class="card-info">
+                                    <p><%= prod.name  %><p>
+                                    <p>$<%= prod.price %></p>
+                                    <p><%= prod.description %> Cal</p>
+                                    <a href="/products/<%= prod._id %>" class="view-more-btn" >View More</a>
+                                </div>
+                        </div>      
+                    <% } %>    
+                </div>
+            </div>
+        <% } %>
+    </div>
+</div>
+

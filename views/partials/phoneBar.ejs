@@ -11,8 +11,16 @@
                 <% } %>
             </div>
         </a>
-        <a href="/register">Sign up</a>
-        <a href="/logout">logout</a>
+        <% if(currentUser){ %>
+            <a href="/logout">logout</a>
+        <% }else{ %>
+            <a href="/login">Log In</a>
+       <% } %>
+        <% if(currentUser && currentUser.member_Status){ %>
+            <a href="/Dashboard">Dashboard</a>
+           <a href="/">Categories</a>
+           <a href="/">Products</a>
+        <%  } %>
         </div>
         <i class="bi bi-arrow-bar-down"></i>
         <i class="bi bi-arrow-bar-up"></i>

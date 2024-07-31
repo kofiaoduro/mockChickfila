@@ -4,21 +4,34 @@
         <div class="logo">
             <a href="/"><img src="https://res.cloudinary.com/dlhis6cii/image/upload/v1722201834/logo_owsyrm.jpg" alt="Logo"></a>
         </div>
-        <a href="/cart" class="cart-icon" id="icon-bag">
-            <i class="bi bi-bag"></i>
-            <span><%= shoppingCart.length %></span>
-        </a>
+        <%if(currentUser && currentUser.member_Status){ %>
+            <a href="/" id="icon-bell">
+                <i class="fa-regular fa-bell"></i>
+            </a>
+        <% }else{ %>
+            <a href="/cart" class="cart-icon" id="icon-bag">
+                <i class="bi bi-bag"></i>
+                <span><%= shoppingCart.length %></span>
+            </a>
+       <% } %>
+
         <div class="navbar-links">
             <% if(currentUser){ %>
                 <a href="/logout">Log out</a>
             <% }else{ %>
                 <a href="/login">Sign In</a>
             <% } %>
-            <a href="/checkout">Order Now</a>
+            <% if(currentUser && currentUser.member_Status){ %>
+                <a href="/dashboard">Dashboard</a>
+                <a href="/">
+                    <i class="fa-regular fa-bell"></i>
+                </a>
+           <% }else{ %>
             <a href="/cart" class="cart-icon">
                 <i class="bi bi-bag"></i>
                 <span><%= shoppingCart.length %></span>
             </a>
+          <% } %>
         </div>
     </div>
 </header>

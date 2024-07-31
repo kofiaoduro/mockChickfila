@@ -44,6 +44,9 @@ const productSchema = new Schema({
     qty: {
         type: Number
     },
+   date: {
+        type: Date,
+    },
     category: {type: Schema.Types.ObjectId, ref: 'Category'}
 
 })

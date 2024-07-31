@@ -46,6 +46,10 @@ header{
 .bi-bag{
     font-size: 25px;
 }
+.fa-bell{
+        font-size: 20px; /* Adjust as needed */
+        font-weight: bold;
+}
 .cart-icon {
     position: relative;
 }
@@ -172,6 +176,49 @@ header{
     display: flex;
     flex-direction: column;
 }
+.column-one a{
+    margin-bottom: 1rem;
+}
+.dashboard-grid{
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+}
+.dash-sideContainer{
+    border: 2px solid red;
+    margin: 1rem 0;
+}
+.dashboard-container{
+    width: 90%;
+    margin: 1rem auto;
+    border: 2px solid green;
+}
+.view-more-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    color: #fff;
+    background-color: #000;
+    border: 2px solid #000;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+}
+
+.view-more-btn:hover {
+    color: #000;
+    background-color: #fff;
+    transform: scale(1.05);
+}
+.dashboard ul li{
+    list-style: none;
+}
+.dashboard ul li a{
+    margin-left: 5px;
+}
 .menu-links{
     display: none;
 }
@@ -292,6 +339,13 @@ button:hover {
     align-items: center;
     justify-content: center;
 }
+.signin-box form{
+    margin-bottom: 1rem;
+}
+.signin-box a{
+    margin-top: 1rem;
+    color: #E51636;
+}
 .Category-content{
     width: 90%;
     margin: 1rem auto;
@@ -345,6 +399,10 @@ footer{
     }
     .checkout-wrapper{
         height: 50%;
+    }
+    .Category-content{
+        max-width: 50%;
+        margin: 0 auto;
     }
 }
 
@@ -402,6 +460,9 @@ footer{
         border: none;
     }
     #icon-bag{
+        display: none;
+    }
+    #icon-bell{
         display: none;
     }
     .route-content{

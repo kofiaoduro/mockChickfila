@@ -30,7 +30,7 @@ router.get('/register', (req, res) => {
 router.post('/register', async (req, res, next) => {
     const { username, password } = req.body;
     try {
-        const user = new User({ username });
+        const user = new User({ username});
         const newUser = await User.register(user, password);
         console.log(newUser);
         req.logIn(newUser, (err) => {

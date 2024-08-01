@@ -11,6 +11,25 @@ body{
     flex-direction: column;
     min-height: 100vh;
 }
+a.button {
+    display: inline-block;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #3498db, #2980b9); /* Gradient background */
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 25px; /* Rounded corners */
+    transition: background 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+a.button:hover {
+    background: linear-gradient(135deg, #2980b9, #3498db); /* Reverse gradient on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
 .wrapper{
     width: 100%;
     display: block;

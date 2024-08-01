@@ -107,6 +107,11 @@ connectToDatabase().then(() => {
     app.use('/', checkoutRoute);
     app.use('/', uploadRoute);
 
+
+    app.use((req, res)=>{ // if the request does not match any of our routes render 404 page
+        res.render('404', { showCartPopup: false })
+    })
+
     const server = app.listen(port, () => {
         console.log(`Listening on port ${port}`);
     });

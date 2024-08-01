@@ -28,8 +28,9 @@
                 </div>          
            <% }) %>
         </div>
-        <% if(!currentUser && currentUser.member_Status){ %>
+        <% if(currentUser && currentUser.member_Status){ %>
+        <% }else{ %>
             <a id="checkout-btn" href="/cart">View Bag</a>
-        <% } %>
+       <% } %>
     </div>
 </main>

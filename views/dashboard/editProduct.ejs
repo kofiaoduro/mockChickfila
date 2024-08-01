@@ -2,7 +2,7 @@
 <div class="Category-container">
     <p>UPDATE: <%= product.name %></p>
     <div class="Category-content">
-        <form action="/product/<%=product._id %>/?_method=PUT" method="post" enctype="multipart/form-data">
+        <form action="/product/<%=product._id %>/edit?_method=PUT" method="post" enctype="multipart/form-data">
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="Product-name"   name="Product[name]">
                 <label for="Product-name"><%= product.name %></label>

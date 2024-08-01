@@ -1,10 +1,10 @@
 <% layout('boilerplate/boiler') -%>
     <div class="dashboard-container">
         <%if(products && !products.length){ %>
-            <p>No Recent Product Updates At this time</p>
+            <p>Products not Avilable</p>
         <% } %>
         <% if(products && products.length){ %>
-            <p>Recent Product Updates</p>
+            <p>All items</p>
             <div class="dashboard-content">
                 <div class="card">
                     <% for(let prod of products){ %>
@@ -19,6 +19,22 @@
                         </div>      
                     <% } %>    
                 </div>
+            </div>
+            <div class="pagination">
+                <% if(currentPage > 1) { %>
+                    <a href="/products?page=<%= currentPage - 1 %>">&laquo; Previous</a>
+                <% } %>
+            
+                <% for(let i = 1; i <= totalPages; i++) { %>
+                    <a href="/products?page=<%= i %>" 
+                       class="<%= currentPage === i ? 'active' : '' %>">
+                       <%= i %>
+                    </a>
+                <% } %>
+            
+                <% if(currentPage < totalPages) { %>
+                    <a href="/products?page=<%= currentPage + 1 %>">Next &raquo;</a>
+                <% } %>
             </div>
         <% } %>
     </div>

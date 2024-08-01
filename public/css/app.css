@@ -43,6 +43,15 @@ header{
     font-size: 25px;
     text-align: left;
 }
+.side-icons {
+    text-align: left;
+    display: none;
+}
+.side-icons a{
+    text-decoration: none;
+    padding: 5px;
+    color: #E51636;
+}
 .bi-bag{
     font-size: 25px;
 }
@@ -179,18 +188,35 @@ header{
 .column-one a{
     margin-bottom: 1rem;
 }
-.dashboard-grid{
-    display: grid;
-    grid-template-columns: 1fr 6fr;
-}
-.dash-sideContainer{
-    border: 2px solid red;
-    margin: 1rem 0;
-}
 .dashboard-container{
     width: 90%;
     margin: 1rem auto;
-    border: 2px solid green;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    margin: 0 5px;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #007bff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination a:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.pagination a.active {
+    background-color: #007bff;
+    color: #fff;
+    pointer-events: none;
 }
 .view-more-btn {
     display: inline-block;
@@ -288,6 +314,9 @@ main{
 .card-info{
     margin: 2rem auto;
     text-align: left;
+}
+.card-form{
+    margin-top: 1rem;
 }
 .card-info p:nth-child(1){
     font-size: 20px;
@@ -472,7 +501,7 @@ footer{
         display: none;
     }
     .logo{
-        text-align: left;
+        text-align: center;
     }
     .footer-content{
         width: 90%;
@@ -486,6 +515,9 @@ footer{
     }
     .checkout-wrapper{
         display: none;
+    }
+    .side-icons{
+        display: block;
     }
 }
 

@@ -1,6 +1,12 @@
 <header>
     <div class="nav-bar">
         <i class="fa-solid fa-bars"></i>
+        <%if(currentUser && currentUser.member_Status){ %>
+            <div class="side-icons">
+                    <a href="/products"><i class="fa-regular fa-folder"></i> Products</a>
+                    <a href="/"><i class="bi bi-person"></i></i></i> Users</a>
+            </div>
+        <% }%>
         <div class="logo">
             <a href="/"><img src="https://res.cloudinary.com/dlhis6cii/image/upload/v1722201834/logo_owsyrm.jpg" alt="Logo"></a>
         </div>
@@ -8,6 +14,7 @@
             <a href="/" id="icon-bell">
                 <i class="fa-regular fa-bell"></i>
             </a>
+            
         <% }else{ %>
             <a href="/cart" class="cart-icon" id="icon-bag">
                 <i class="bi bi-bag"></i>

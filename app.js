@@ -63,6 +63,8 @@ connectToDatabase().then(() => {
         console.error('Session Store Error:', e);
     });
 
+    
+
     app.use(session({
         store,
         secret,

@@ -34,22 +34,6 @@ router.get('/category/:name', async (req, res)=>{
     console.log(category, 'Categoryyyyyyy')
     res.render('dashboard/individualCategory', { category,  showCartPopup: true  })
 })
-
-
-
-router.get('/:id/newproduct', async (req, res)=>{
-    const { id } = req.params
-    const category = await Category.findById(id)
-    res.render('dashboard/categoryProduct', { category, showCartPopup: true })
-    console.log(category)
-})
-
-
-
-// adding products
-router.get('/products/new', (req, res)=>{
-    res.render('dashboard/newProduct', { showCartPopup: true  })
-})
 router.post('/category/new', upload.single('image'), async (req, res)=>{
     const { name, description } = req.body.category
     const category = new Category({name: name, description: description})
@@ -58,6 +42,48 @@ router.post('/category/new', upload.single('image'), async (req, res)=>{
     console.log(category, "Hereee is your category")
     res.redirect(`/menu/${category.name}`)
 })
+
+
+router.get('/:id/newproduct', async (req, res)=>{
+    const { id } = req.params // this will be used to associate with a product
+    const category = await Category.findById(id)
+    res.render('dashboard/categoryProduct', { category, showCartPopup: true })
+    console.log(category)
+})
+
+
+// adding products
+
+router.get('/products', async(req, res)=>{
+    const page = parseInt(req.query.page) || 1; // Default to page 1 if not specified
+    const limit = 5; // Number of products per page
+    const skip = (page - 1) * limit;
+    try {
+        // Fetch the products for the current page
+        const products = await Product.find().limit(limit).skip(skip);
+
+        // Fetch the total number of products
+        const totalProducts = await Product.countDocuments();
+
+        // Calculate total pages
+        const totalPages = Math.ceil(totalProducts / limit);
+
+        // Render the view with products and pagination data
+        res.render('dashboard/Allproduct', {
+            products,
+            currentPage: page,
+            totalPages,
+            showCartPopup: false
+        });
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        res.status(500).send('Internal Server Error');
+    }
+})
+router.get('/products/new', (req, res)=>{
+    res.render('dashboard/newProduct', { showCartPopup: true  })
+})
+
 router.get('/products/:id', async (req, res)=>{
     const { id } = req.params //extracting the id from the params
     const product = await Product.findById(id) //  use that id to find the product

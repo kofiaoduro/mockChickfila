@@ -11,7 +11,7 @@
                                 <p>$<%= product.price %></p>
                                 <p><%= product.description %> Cal</p>
                                 <a href="/products/<%= product._id %>/edit" class="view-more-btn" >Edit Product</a>
-                                <form action="/product/<%= product._id %>?_method=DELETE" method="post">
+                                <form class="card-form" action="/product/<%= product._id %>?_method=DELETE" method="post">
                                    <button type="submit">Delete Product</button>
                                 </form>
                             </div>

@@ -94,6 +94,9 @@ connectToDatabase().then(() => {
     app.get('/', addShoppingCartToLocals, loopThroughCartSession, async (req, res) => {
         try {
             const categoryLinks = await Category.find({}).populate('products');
+            if(!categoryLinks){
+                throw new Error('CategoryLinks not found', 404)
+            }
             console.log(categoryLinks);
             res.render('home', { categoryLinks, showCartPopup: false });
             console.log('Here is your session:', req.session.shoppingCart);
@@ -108,8 +111,20 @@ connectToDatabase().then(() => {
     app.use('/', uploadRoute);
 
 
-    app.use((req, res)=>{ // if the request does not match any of our routes render 404 page
+   /* app.use((req, res)=>{ // if the request does not match any of our routes render 404 page
         res.render('404', { showCartPopup: false })
+    })
+        */
+
+
+    app.use((err, req, res, next)=>{
+        console.error('Error:', err.message); // Log the error message
+
+        // Only render a response if one hasn't been sent yet
+        if (!res.headersSent) {
+            res.status(err.status || 500); // Set the status code based on the error, or default to 500
+            res.render('404', { showCartPopup: false, error: err });
+        }
     })
 
     const server = app.listen(port, () => {

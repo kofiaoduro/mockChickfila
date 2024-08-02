@@ -12,34 +12,54 @@ router.get('/dashboard', async(req, res)=>{
     try{
         // find all the products with the recent date and only show me their name description date and price and image
         const products = await Product.find({date: {$ne: null}}, {name: 1, description: 1, date:1, price:1, image:1}).sort({ date: -1 }).limit(3);
+        if(!products){
+            throw new Error('Error fetching products in the dashboard page', 404)
+        }
         console.log(products)
         res.render('dashboard/main', { products, showCartPopup: false  })
     }catch(e){
-
+        console.log(e)
+        next(e)
     }
 })
 
 //creating new category
 router.get('/categories', async (req, res)=>{
-    const categories = await Category.find({})
-    console.log(categories)
-    res.render('dashboard/categories', { categories,  showCartPopup: true  })
+    try{
+        const categories = await Category.find({})
+        if(!categories){
+            throw new Error('Database couldnt find categories', 404)
+        }
+        console.log(categories)
+        res.render('dashboard/categories', { categories,  showCartPopup: true  })
+    }
+    catch(e){
+        console.log(e)
+        next(e)
+    }
 })
 router.get('/category/new', (req, res)=>{
     res.render('dashboard/newCategory', { showCartPopup: true  })
 })
 router.get('/category/:name', async (req, res)=>{
-    const { name } = req.params
-    const category = await Category.findOne({name: name})
-    console.log(category, 'Categoryyyyyyy')
-    res.render('dashboard/individualCategory', { category,  showCartPopup: true  })
+    try{    
+        const { name } = req.params
+        const category = await Category.findOne({name: name})
+        if(!category){
+            throw new Error('The name of the category could not be found', 404)
+        }
+        res.render('dashboard/individualCategory', { category,  showCartPopup: true  })
+    }
+    catch(e){
+        console.log(e)
+        next(e)
+    }
 })
 router.post('/category/new', upload.single('image'), async (req, res)=>{
     const { name, description } = req.body.category
     const category = new Category({name: name, description: description})
     category.image = {url: req.file.path, filename: req.file.filename}
     await category.save()
-    console.log(category, "Hereee is your category")
     res.redirect(`/menu/${category.name}`)
 })
 
@@ -77,7 +97,7 @@ router.get('/products', async(req, res)=>{
         });
     } catch (error) {
         console.error('Error fetching products:', error);
-        res.status(500).send('Internal Server Error');
+        next(e)
     }
 })
 router.get('/products/new', (req, res)=>{
@@ -126,10 +146,6 @@ router.delete('/product/:id', async (req, res) => {
 
   try {
     const product = await Product.findById(id);
-    if (!product) {
-      return res.status(404).send('Product not found');
-    }
-
     await cloudinary.uploader.destroy(product.image.filename); // Correct method for Cloudinary
 
     await Product.findByIdAndDelete(id); // Correct method for deleting a product

@@ -12,16 +12,20 @@ router.use(addShoppingCartToLocals);
 router.use(loopThroughCartSession);
 
 
-router.get('/menu/:name', async (req, res)=>{
+router.get('/menu/:name', async (req, res, next)=>{
     try{
         const { name} = req.params
         const categoryLink = await Category.findOne({name})
         .populate('products')
+        if(!categoryLink){
+            throw new Error('category name not found', 404)
+        }
         res.render('menu',{ categoryLink, itemOnly: res.locals.itemOnly, showCartPopup: true  })
         console.log(categoryLink)
     }
     catch(e){
         console.log(e)
+        next(e)
     }
    
 })

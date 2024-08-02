@@ -55,7 +55,6 @@ router.post('/login', passport.authenticate('local', {
 }), (req, res) => {
     if (req.session.returnTo) {
         const redirectUrl = req.session.returnTo;
-        console.log(redirectUrl, 'This is your return To');
         req.session.returnTo = null;
         return res.redirect(redirectUrl);
     }

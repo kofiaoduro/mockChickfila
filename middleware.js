@@ -48,7 +48,7 @@ const loopThroughCartSession = async (req, res, next) => {
 const isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
         req.session.returnTo = req.originalUrl;
-        console.log(req.session.returnTo, "You will return To")
+        req.flash('error', 'You do not have Permission to access this page')
         return res.redirect('/login');
     }
     next();

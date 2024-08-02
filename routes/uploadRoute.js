@@ -7,8 +7,11 @@ const multer  = require('multer')
 const { storage } = require('../upload')
 const upload = multer({storage})
 const { cloudinary  } = require('../upload')
+const { isLoggedIn } = require('../middleware')
 
-router.get('/dashboard', async(req, res)=>{
+router.use(isLoggedIn)
+
+router.get('/dashboard',  async(req, res)=>{
     try{
         // find all the products with the recent date and only show me their name description date and price and image
         const products = await Product.find({date: {$ne: null}}, {name: 1, description: 1, date:1, price:1, image:1}).sort({ date: -1 }).limit(3);
@@ -116,19 +119,32 @@ router.get('/products/:id/edit', async (req, res)=>{
     res.render('dashboard/editProduct', { product, showCartPopup: false })
 })
 router.post('/products/new', upload.single('image'), async (req, res)=>{
-    const { name, description, price, foodType} = req.body.Product
-    const newPrice = parseFloat(price)
-    const newDescription = parseInt(description)
-    const ogCategory = await Category.findOne({name: req.body.category})
-    console.log(ogCategory, 'Hereeeee is your category')
-    const product = new Product({name: name, foodType,  description:newDescription, price: newPrice, date: Date.now()})
-    console.log(product, "Product!!!!!!!!")
-    product.image = {url: req.file.path, filename: req.file.filename}
-    product.category = ogCategory
-    await product.save()
-    ogCategory.products.push(product)
-    await ogCategory.save()
-    res.redirect('/products/new')
+    try{
+        const { name, description, price, foodType} = req.body.Product
+        const newPrice = parseFloat(price)
+        const newDescription = parseInt(description)
+        const ogCategory = await Category.findOne({name: req.body.category})
+        if (!ogCategory) {
+            req.flash('error', 'Category cannot be found');
+            return res.redirect('/products/new');
+        }
+
+        console.log(ogCategory, 'Hereeeee is your category')
+        const product = new Product({name: name, foodType,  description:newDescription, price: newPrice, date: Date.now()})
+        console.log(product, "Product!!!!!!!!")
+        product.image = {url: req.file.path, filename: req.file.filename}
+        product.category = ogCategory
+        await product.save()
+        ogCategory.products.push(product)
+        await ogCategory.save()
+        req.flash('success', 'Product Created');
+        res.redirect('/products/new')
+    }catch(e){
+        req.flash('error', 'An error occurred while creating the product.');
+        res.redirect('/products/new');
+        next(e);
+        console.log(e)
+    }
 })
 router.put('/product/:id/edit', upload.single('image'), async (req , res)=>{
     const { name, description, price, foodType} = req.body.Product
@@ -146,15 +162,22 @@ router.delete('/product/:id', async (req, res) => {
 
   try {
     const product = await Product.findById(id);
+    if(!product){
+       req.flash('error', 'Product cannot be found')
+       return res.redirect('/product')
+    }
     await cloudinary.uploader.destroy(product.image.filename); // Correct method for Cloudinary
 
     await Product.findByIdAndDelete(id); // Correct method for deleting a product
 
     console.log(product);
+    req.flash('success', 'Product Deleted')
     res.redirect('/dashboard');
   } catch (error) {
-    console.error(error);
-    res.status(500).send('An error occurred while deleting the product');
+    req.flash('error', 'An error occurred while delating the product.');
+    res.redirect('/products');
+    next(e);
+    console.log(e)
   }
 });
 

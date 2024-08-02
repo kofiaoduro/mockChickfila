@@ -81,7 +81,9 @@ connectToDatabase().then(() => {
     app.use((req, res, next) => {
         res.locals.currentUser = req.session.currentUser;
         res.locals.error = req.flash('error')
-        console.log(req.user, 'req.user !!!!!!!!!!!!!!!!!!!!')
+        res.locals.success = req.flash('success')
+        console.log(res.locals.success, 'sUCESSSSSSSSSS')
+        //console.log(res.locals.currentUser, 'Current User!!!!!!!!!!!')
         next();
     });
 

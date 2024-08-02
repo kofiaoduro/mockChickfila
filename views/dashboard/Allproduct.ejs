@@ -1,5 +1,8 @@
 <% layout('boilerplate/boiler') -%>
     <div class="dashboard-container">
+        <% if(currentUser && currentUser.member_Status){ %>
+            <a href="/products/new">Add Products</a>
+        <% } %>
         <%if(products && !products.length){ %>
             <p>Products not Avilable</p>
         <% } %>

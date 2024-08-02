@@ -1,6 +1,7 @@
 const Category = require('./models/category');
 const Product = require('./models/product')
 const passport = require('passport')
+const Joi = require('joi');
 const fetchCategoryLinks = async (req, res, next) => {
     try {
         const categoryLinks = await Category.find({});
@@ -53,10 +54,33 @@ const isLoggedIn = (req, res, next) => {
     next();
 };
 
+const verifyPassword = (req, res, next)=>{
+    const schema = Joi.object({
+        username: Joi.string()
+        .alphanum()
+        .min(10)
+        .max(20)
+        .required(),
+
+        password: Joi.string()
+        .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
+        .required()
+    })
+    const { error } = schema.validate(req.body);
+
+    if (error) {
+        console.log('Validation error:', error.details[0].message);
+        req.flash('error', error.details[0].message)
+        return res.redirect('/register'); // Redirect on validation error
+    }
+
+    next(); // Proceed if validation passes
+}
 
 module.exports = {
     fetchCategoryLinks,
     addShoppingCartToLocals,
     loopThroughCartSession,
-    isLoggedIn
+    isLoggedIn,
+    verifyPassword
 };

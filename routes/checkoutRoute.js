@@ -6,7 +6,7 @@ const User = require('../models/user');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const Product = require('../models/product');
 const { loopThroughCartSession } = require('../middleware');
-
+const { verifyPassword } = require('../middleware')
 const BASE_URL = 'https://protected-bayou-30650-01c800256a90.herokuapp.com/' || "http://localhost:3000/";
 
 router.get('/login', (req, res) => {
@@ -27,7 +27,7 @@ router.get('/register', (req, res) => {
     res.render('register', { showCartPopup: false });
 });
 
-router.post('/register', async (req, res, next) => {
+router.post('/register', verifyPassword, async (req, res, next) => {
     const { username, password } = req.body;
     try {
         const user = new User({ username});
@@ -44,6 +44,7 @@ router.post('/register', async (req, res, next) => {
         console.log(e);
         // Handle the registration error and send a response
         res.redirect('/register'); // Or handle it appropriately
+        return next(e)
     }
 });
 

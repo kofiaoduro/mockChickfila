@@ -7,7 +7,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const Product = require('../models/product');
 const { loopThroughCartSession } = require('../middleware');
 const { verifyPassword } = require('../middleware')
-const BASE_URL = 'https://protected-bayou-30650-01c800256a90.herokuapp.com/' || "http://localhost:3000/";
+const BASE_URL = 'https://protected-bayou-30650-01c800256a90.herokuapp.com' || "http://localhost:3000/";
 
 router.get('/login', (req, res) => {
     res.render('login', { showCartPopup: false });
@@ -55,6 +55,7 @@ router.post('/login', passport.authenticate('local', {
 }), (req, res) => {
     if (req.session.returnTo) {
         const redirectUrl = req.session.returnTo;
+       // console.log(redirectUrl, 'This is your return To');
         req.session.returnTo = null;
         return res.redirect(redirectUrl);
     }
@@ -93,10 +94,12 @@ router.post('/checkout', loopThroughCartSession, async (req, res) => {
 });
 
 router.get('/complete', (req, res) => {
-    res.send('Your payment was successful');
+    req.flash('success', 'Your payment was succesful')
+    res.redirect('/');
 });
 
 router.get('/cancel', (req, res) => {
+    req.flash('error', 'Unable to process your payment')
     res.redirect('/cart');
 });
 

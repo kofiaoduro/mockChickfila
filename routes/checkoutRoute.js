@@ -96,6 +96,7 @@ router.post('/checkout', loopThroughCartSession, async (req, res) => {
 router.get('/complete', (req, res) => {
     req.flash('success', 'Your payment was succesful')
     res.redirect('/');
+     req.session.shoppingCart.destroy() 
 });
 
 router.get('/cancel', (req, res) => {

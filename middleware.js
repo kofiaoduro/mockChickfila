@@ -29,7 +29,6 @@ const loopThroughCartSession = async (req, res, next) => {
                 const cartItem = await Product.findById(req.session.shoppingCart[i].id);
                 if (cartItem) {
                     cartItem.qty = parseInt(req.session.shoppingCart[i].qty, 10);
-                    console.log('OURRRR iTEMMMMMMM', cartItem);
                     cartItems.push(cartItem);
                     console.log(cartItems, 'Cart Itemmsssss');
                 }

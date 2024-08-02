@@ -32,13 +32,24 @@ router.get('/menu/:name', async (req, res, next)=>{
 router.get('/cart',  isLoggedIn, (req, res)=>{
     res.render('cart', { showCartPopup: false } )
 })
+router.post('/cart/:id', (req, res)=>{
+    const { id } = req.params
+    //console.log(req.body.delete)
+    //console.log(req.session.shoppingCart, 'my sessions')
+    if (req.session.shoppingCart) {
+        // Assuming req.body.delete contains the id to delete
+        req.session.shoppingCart = req.session.shoppingCart.filter((elem) => {
+            return elem.id !== req.body.delete[0];
+        });
+        res.redirect('/cart')
+       // console.log(req.session.shoppingCart);
+    }
+    
+})
 router.post('/menu/:name', async (req, res)=>{
     const { name } = req.params
-    console.log(req.body, 'My Body!!!!!!!!!!')
     const item = await Product.findOne({name: name})
     .populate('category')
-    console.log('Here is your item !!!!!!',item)
-
     if (!req.session.shoppingCart) {
         req.session.shoppingCart = [];
 
@@ -53,14 +64,14 @@ router.post('/menu/:name', async (req, res)=>{
                 .populate('category')
                 if(singleItem){
                     req.session.Item = singleItem
-                    console.log('Here is your single.item', req.session.Item)
+                    //console.log('Here is your single.item', req.session.Item)
                 }
             }catch(e){
                     console.log(e)
             }
         }
     req.session.shoppingCart.push(req.body)
-    console.log('Here is your session !!!!!!', req.session.shoppingCart)
+   // console.log('Here is your session !!!!!!', req.session.shoppingCart)
     res.redirect(`/menu/${item.category.name}`)
 })
 

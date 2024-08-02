@@ -7,7 +7,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const Product = require('../models/product');
 const { loopThroughCartSession } = require('../middleware');
 const { verifyPassword } = require('../middleware')
-const BASE_URL = 'https://protected-bayou-30650-01c800256a90.herokuapp.com' || "http://localhost:3000/";
+const BASE_URL = 'https://protected-bayou-30650-01c800256a90.herokuapp.com' ||  "http://localhost:3000";
 
 router.get('/login', (req, res) => {
     res.render('login', { showCartPopup: false });
@@ -53,17 +53,17 @@ router.post('/login', passport.authenticate('local', {
     failureRedirect: '/login',
     keepSessionInfo: true
 }), (req, res) => {
+    req.session.currentUser = req.user
     if (req.session.returnTo) {
         const redirectUrl = req.session.returnTo;
        // console.log(redirectUrl, 'This is your return To');
         req.session.returnTo = null;
         return res.redirect(redirectUrl);
     }
-    req.session.currentUser = req.user
     res.redirect('/');
 });
 
-router.post('/checkout', loopThroughCartSession, async (req, res) => {
+router.post('/checkout',  loopThroughCartSession, async (req, res) => {
     console.log(req.session.shoppingCart);
     console.log('Cart Items:', res.locals.cartItems);
     const lineItems = res.locals.cartItems.map(item => ({
@@ -95,8 +95,8 @@ router.post('/checkout', loopThroughCartSession, async (req, res) => {
 
 router.get('/complete', (req, res) => {
     req.flash('success', 'Your payment was succesful')
+    req.session.shoppingCart = null
     res.redirect('/');
-     req.session.shoppingCart.destroy() 
 });
 
 router.get('/cancel', (req, res) => {

@@ -21,7 +21,6 @@ router.get('/menu/:name', async (req, res, next)=>{
             throw new Error('category name not found', 404)
         }
         res.render('menu',{ categoryLink, itemOnly: res.locals.itemOnly, showCartPopup: true  })
-        console.log(categoryLink)
     }
     catch(e){
         console.log(e)

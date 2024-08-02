@@ -30,7 +30,7 @@ const loopThroughCartSession = async (req, res, next) => {
                 if (cartItem) {
                     cartItem.qty = parseInt(req.session.shoppingCart[i].qty, 10);
                     cartItems.push(cartItem);
-                    console.log(cartItems, 'Cart Itemmsssss');
+                   // console.log(cartItems, 'Cart Itemmsssss');
                 }
             }
             res.locals.cartItems = cartItems;
@@ -45,7 +45,7 @@ const loopThroughCartSession = async (req, res, next) => {
 };
 
 const isLoggedIn = (req, res, next) => {
-    if (!req.isAuthenticated()) {
+    if (!req.session.currentUser) {
         req.session.returnTo = req.originalUrl;
         req.flash('error', 'You do not have Permission to access this page')
         return res.redirect('/login');

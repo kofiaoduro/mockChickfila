@@ -82,8 +82,6 @@ connectToDatabase().then(() => {
         res.locals.currentUser = req.session.currentUser;
         res.locals.error = req.flash('error')
         res.locals.success = req.flash('success')
-        console.log(res.locals.success, 'sUCESSSSSSSSSS')
-        //console.log(res.locals.currentUser, 'Current User!!!!!!!!!!!')
         next();
     });
 
@@ -100,9 +98,9 @@ connectToDatabase().then(() => {
             if(!categoryLinks){
                 throw new Error('CategoryLinks not found', 404)
             }
-            console.log(categoryLinks);
+            //console.log(categoryLinks);
             res.render('home', { categoryLinks, showCartPopup: false });
-            console.log('Here is your session:', req.session.shoppingCart);
+            //console.log('Here is your session:', req.session.shoppingCart);
         } catch (err) {
             console.error('Error fetching categories:', err);
             res.status(500).send('Internal Server Error');

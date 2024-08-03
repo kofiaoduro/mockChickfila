@@ -33,14 +33,19 @@ router.get('/cart',  isLoggedIn, (req, res)=>{
 })
 router.post('/cart/:id', (req, res)=>{
     const { id } = req.params
-    //console.log(req.body.delete)
-    //console.log(req.session.shoppingCart, 'my sessions')
+    console.log(req.body.delete)
+    console.log(req.session.shoppingCart, 'my sessions')
     if (req.session.shoppingCart) {
-        // Assuming req.body.delete contains the id to delete
+        let found = false;
         req.session.shoppingCart = req.session.shoppingCart.filter((elem) => {
-            return elem.id !== req.body.delete[0];
+            if (elem.id === req.body.delete[0] && !found) {
+                found = true;
+                return false; // Remove the first matching item
+            }
+            return true; // Keep all other items
         });
         res.redirect('/cart')
+        console.log(req.body.delete)
        // console.log(req.session.shoppingCart);
     }
     

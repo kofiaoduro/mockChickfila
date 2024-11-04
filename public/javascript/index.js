@@ -30,3 +30,6 @@ arrowUp.addEventListener('click', ()=>{
 setTimeout(() => {
     checkout_wrapper.style.display = 'none';
 }, 10000);
+
+
+/// add new things
